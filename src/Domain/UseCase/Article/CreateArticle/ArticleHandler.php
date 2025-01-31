@@ -6,7 +6,7 @@ namespace App\Domain\UseCase\Article\CreateArticle;
 
 use App\Domain\Entity\Article\Article;
 use App\Domain\Repository\Article\ArticleRepositoryInterface;
-use App\Domain\Service\Article\ArticleCommandService;
+use App\Domain\Service\Article\ArticleCommandServiceInterface;
 use InvalidArgumentException;
 
 readonly class ArticleHandler
@@ -14,7 +14,7 @@ readonly class ArticleHandler
 
     public function __construct(
         private ArticleRepositoryInterface $articleRepository,
-        private ArticleCommandService $commandService,
+        private ArticleCommandServiceInterface $commandService,
     ) {}
 
     public function handle(ArticleDto $command): Article

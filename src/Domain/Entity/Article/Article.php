@@ -28,7 +28,7 @@ class Article
     private bool $active = false;
 
     #[ORM\Column(type: 'integer', options: ['default' => 0, 'comment' => 'Количество просмотров'])]
-    private string $numberOfViews;
+    private int $numberOfViews;
 
     #[ORM\Column(type: Types::TEXT, nullable: true, options: ['default' => ''])]
     private ?string $description;
@@ -74,12 +74,12 @@ class Article
         return $this;
     }
 
-    public function getNumberOfViews(): string
+    public function getNumberOfViews(): int
     {
         return $this->numberOfViews;
     }
 
-    public function setNumberOfViews(string $numberOfViews): self
+    public function setNumberOfViews(int $numberOfViews): self
     {
         $this->numberOfViews = $numberOfViews;
         return $this;
