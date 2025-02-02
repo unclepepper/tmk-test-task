@@ -56,7 +56,7 @@ class ArticleDto
         return $this;
     }
 
-    public function getNumberOfViews(): ?int
+    public function getNumberOfViews(): int
     {
         return $this->numberOfViews;
     }

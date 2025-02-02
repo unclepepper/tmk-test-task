@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Service\Article;
 
+use App\Application\Service\Common\Parse\ParseTxtFile;
 use App\Domain\Repository\Article\ArticleRepositoryInterface;
 use App\Domain\UseCase\Article\CreateArticle\ArticleDto;
 use App\Domain\UseCase\Article\CreateArticle\ArticleHandler;
@@ -15,17 +16,20 @@ readonly class ArticleCreateService implements ArticleCreateServiceInterface
 
     public function __construct(
         private ArticleHandler $articleHandler,
-        private ArticleRepositoryInterface $articleRepository
+        private ArticleRepositoryInterface $articleRepository,
     ) {}
 
     /**
      * @throws Exception
      */
-    public function create(string $filename): bool
+    public function createFromFile(string $path): bool
     {
-        $articles = $this->parse($filename);
 
-        if($this->createDto($articles))
+
+        $articles = new ParseTxtFile($path);
+
+
+        if($this->createDto($articles->parse()))
         {
             return true;
         }
@@ -34,8 +38,8 @@ readonly class ArticleCreateService implements ArticleCreateServiceInterface
     }
 
     /**
-     * @param array $articles
-     * @return false
+     * @param array<string, mixed> $articles
+     * @return bool
      * @throws Exception
      */
     public function createDto(array $articles): bool
@@ -67,47 +71,6 @@ readonly class ArticleCreateService implements ArticleCreateServiceInterface
             $this->articleHandler->handle($articleDto);
         }
         return true;
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function parse(string $filename): array
-    {
-        if(!file_exists($filename))
-        {
-            throw new Exception('Cannot open file');
-        }
-
-        if(($handle = fopen($filename, 'r')) !== false)
-        {
-
-
-            $data = [];
-
-
-            if(($header = fgetcsv($handle, 1000, ';')) !== false)
-            {
-
-                while(($row = fgetcsv($handle, 1000, ';')) !== false)
-                {
-
-                    if(count($header) !== count($row))
-                    {
-                        continue;
-                    }
-
-                    $data[] = array_combine($header, $row);
-                }
-            }
-            fclose($handle);
-        }
-        else
-        {
-            throw new Exception('File not found');
-        }
-
-        return $data;
     }
 
     private function checkArticle(string $title): bool
