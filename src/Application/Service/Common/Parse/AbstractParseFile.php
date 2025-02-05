@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Application\Service\Common\Parse;
 
 use Exception;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 
 abstract class AbstractParseFile
@@ -13,13 +14,13 @@ abstract class AbstractParseFile
     protected array $data;
 
     public function __construct(
-        protected string $path,
+        protected KernelInterface $kernel,
     ) {}
 
     /**
      * @return array<string, mixed>
      * @throws Exception
      */
-    abstract public function parse(): array;
+    abstract public function parse(string $nameFile): array;
 
 }

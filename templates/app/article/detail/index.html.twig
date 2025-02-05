@@ -55,7 +55,7 @@
             <hr>
             <div class="d-flex justify-content-between">
                 <a class="text-decoration-none" href="{{ path('article.index', {'active': 1})}}">Назад к списку</a>
-                <p>{{ article.createdAt | date }}</p>
+                <p>{{ article.createdAt | format_datetime('long', 'medium', locale=app.locale) }}</p>
             </div>
         </div>
 

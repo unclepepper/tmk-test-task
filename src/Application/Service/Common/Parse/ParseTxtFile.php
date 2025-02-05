@@ -14,14 +14,16 @@ final class ParseTxtFile extends AbstractParseFile
      * @return string[]
      * @throws Exception
      */
-    public function parse(): array
+    public function parse(string $nameFile): array
     {
-        if(!file_exists($this->path))
+        $path = $this->kernel->getProjectDir().$nameFile;
+
+        if(!file_exists($path))
         {
             throw new Exception('Cannot open file');
         }
 
-        if(($handle = fopen($this->path, 'r')) !== false)
+        if(($handle = fopen($path, 'r')) !== false)
         {
             if(($header = fgetcsv($handle, 1000, ';')) !== false)
             {

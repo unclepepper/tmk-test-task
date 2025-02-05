@@ -22,9 +22,7 @@ class CreateController extends AbstractController
     ): Response
     {
 
-        $rootDir = $this->getParameter('kernel.project_dir');
-
-        if(!$articleCreateService->createFromFile($rootDir.'/articles.txt'))
+        if(!$articleCreateService->createFromFile('/articles.txt'))
         {
             return $this->redirectToRoute('app_frontpage');
         }

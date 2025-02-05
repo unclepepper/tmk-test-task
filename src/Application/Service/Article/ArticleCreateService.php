@@ -17,6 +17,7 @@ readonly class ArticleCreateService implements ArticleCreateServiceInterface
     public function __construct(
         private ArticleHandler $articleHandler,
         private ArticleRepositoryInterface $articleRepository,
+        private ParseTxtFile $parseTxtFile
     ) {}
 
     /**
@@ -25,11 +26,7 @@ readonly class ArticleCreateService implements ArticleCreateServiceInterface
     public function createFromFile(string $path): bool
     {
 
-
-        $articles = new ParseTxtFile($path);
-
-
-        if($this->createDto($articles->parse()))
+        if($this->createDto($this->parseTxtFile->parse($path)))
         {
             return true;
         }
