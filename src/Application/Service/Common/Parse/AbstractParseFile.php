@@ -8,7 +8,7 @@ use Exception;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 
-abstract class AbstractParseFile
+abstract class AbstractParseFile implements ParseFileInterface
 {
 
     protected array $data;

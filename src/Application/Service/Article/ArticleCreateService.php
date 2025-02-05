@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Service\Article;
 
+use App\Application\Service\Common\Parse\ParseFileInterface;
 use App\Application\Service\Common\Parse\ParseTxtFile;
 use App\Domain\Repository\Article\ArticleRepositoryInterface;
 use App\Domain\UseCase\Article\CreateArticle\ArticleDto;
@@ -17,7 +18,7 @@ readonly class ArticleCreateService implements ArticleCreateServiceInterface
     public function __construct(
         private ArticleHandler $articleHandler,
         private ArticleRepositoryInterface $articleRepository,
-        private ParseTxtFile $parseTxtFile
+        private ParseFileInterface $parseTxtFile
     ) {}
 
     /**
